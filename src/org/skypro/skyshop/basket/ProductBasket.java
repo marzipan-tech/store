@@ -56,16 +56,27 @@ public class ProductBasket {
         return totalSum;
     }
 
+    private int countSpecialProducts() {
+        int count = 0;
+        for (Product product : products) {
+            if (product != null && product.isSpecial()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void printBasket() {
         if (checkIfBasketEmpty()) {
             System.out.println("В корзине пусто");
         }
         for (Product product : products) {
             if (product != null) {
-                System.out.println(product.getName() + ": " + product.getPrice() + " руб.");
+                System.out.println(product);
             }
         }
         System.out.println("Итого: " + findTotalSum() + " руб.");
+        System.out.println("Специальных товаров: " + countSpecialProducts());
     }
 
     public boolean checkIsProductInBasket(String name) {
