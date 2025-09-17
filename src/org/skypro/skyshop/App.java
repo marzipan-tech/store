@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.Arrays;
@@ -66,5 +67,40 @@ public class App {
         engine.add(milk);
         engine.add(milk);
         System.out.println(Arrays.toString(engine.search("молоко")));
+        try {
+            Product fish = new DiscountedProduct(" ", 10, 1200);
+            Product salt = new FixPriceProduct("");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product cherry = new SimpleProduct("Вишня", -310);
+            Product banana = new DiscountedProduct("Бананы", 10, -120);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product apple = new DiscountedProduct("Яблоки", 120, 105);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product fish = new DiscountedProduct(" ", 10, 1200);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product banana = new DiscountedProduct("Бананы", 10, -120);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(engine.findMostRelevant("хлеб"));
+        System.out.println(engine.findMostRelevant("молоко"));
+        System.out.println(engine.findMostRelevant("о"));
+        try {
+            engine.findMostRelevant("блин");
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
