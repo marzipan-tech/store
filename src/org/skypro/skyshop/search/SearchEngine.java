@@ -45,4 +45,27 @@ public class SearchEngine {
             }
         }
     }
+
+    public Searchable findMostRelevant(String search) throws BestResultNotFound {
+        Searchable searchable = null;
+        int maxCount = 0;
+        for (Searchable value : searchables) {
+            int count = 0;
+            int index = 0;
+            int searchIndex = value.searchTerm().toLowerCase().indexOf(search, index);
+            while (searchIndex != -1) {
+                count++;
+                index = searchIndex + search.length();
+                searchIndex = value.searchTerm().toLowerCase().indexOf(search, index);
+            }
+            if (count > maxCount) {
+                maxCount = count;
+                searchable = value;
+            }
+        }
+        if (maxCount == 0) {
+            throw new BestResultNotFound("Ничего не найдено по запросу: " + search);
+        }
+        return searchable;
+    }
 }
