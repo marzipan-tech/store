@@ -2,48 +2,17 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductBasket {
-    private Product[] products;
+    private LinkedList<Product> products;
 
     public ProductBasket() {
-        this.products = new Product[5];
-    }
-
-    private boolean checkIfBasketFull() {
-        boolean basketIsFull = true;
-        for (Product product : products) {
-            if (product == null) {
-                basketIsFull = false;
-                break;
-            }
-        }
-        return basketIsFull;
-    }
-
-    private boolean checkIfBasketEmpty() {
-        boolean basketIsEmpty = true;
-        for (Product product : products) {
-            if (product != null) {
-                basketIsEmpty = false;
-                break;
-            }
-        }
-        return basketIsEmpty;
+        this.products = new LinkedList<>();
     }
 
     public void addProduct(Product product) {
-        if (checkIfBasketFull()) {
-            System.out.println("Невозможно добавить продукт");
-        }
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                return;
-            }
-        }
+        products.add(product);
     }
 
     public int findTotalSum() {
@@ -67,7 +36,7 @@ public class ProductBasket {
     }
 
     public void printBasket() {
-        if (checkIfBasketEmpty()) {
+        if (products.isEmpty()) {
             System.out.println("В корзине пусто");
         }
         for (Product product : products) {
@@ -89,6 +58,19 @@ public class ProductBasket {
     }
 
     public void emptyBasket() {
-        Arrays.fill(products, null);
+        products.clear();
+    }
+
+    public List<Product> deleteProductByName(String name) {
+        Iterator<Product> iterator = products.iterator();
+        List<Product> deletedItems = new ArrayList<>();
+        while (iterator.hasNext()) {
+            Product item = iterator.next();
+            if (item.searchTerm().equalsIgnoreCase(name)) {
+                deletedItems.add(item);
+                iterator.remove();
+            }
+        }
+        return deletedItems;
     }
 }
