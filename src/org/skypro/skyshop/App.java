@@ -12,7 +12,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import java.util.Arrays;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BestResultNotFound {
         Product bread = new SimpleProduct("Хлеб", 100);
         Product milk = new DiscountedProduct("Молоко", 12, 200);
         Product cheese = new SimpleProduct("Сыр", 140);
