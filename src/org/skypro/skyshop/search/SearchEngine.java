@@ -16,13 +16,13 @@ public class SearchEngine {
         return "SearchEngine " + searchables;
     }
 
-    public List<Searchable> search(String query) {
+    public Map<String, Searchable> search(String query) {
         Iterator<Searchable> iterator = searchables.iterator();
-        List<Searchable> searchResult = new ArrayList<>();
+        Map<String, Searchable> searchResult = new TreeMap<>();
         while (iterator.hasNext()) {
             Searchable item = iterator.next();
             if (item.searchTerm().toLowerCase().contains(query.toLowerCase())) {
-                searchResult.add(item);
+                searchResult.put(item.getName(), item);
             }
         }
         return searchResult;

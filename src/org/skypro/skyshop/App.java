@@ -63,9 +63,9 @@ public class App {
         engine.add(breadBorodinskiyKolomenskoe);
         engine.add(milkProstokvashino32);
         engine.add(breadRzhanoyKolomenskoe);
-        System.out.println(engine.search("мясо"));
-        System.out.println(engine.search("вкуснотеево"));
-        System.out.println(engine.search("хлеб"));
+        System.out.println(engine.search("мясо").values());
+        System.out.println(engine.search("вкуснотеево").values());
+        System.out.println(engine.search("хлеб").values());
         try {
             Product fish = new DiscountedProduct(" ", 10, 1200);
             Product salt = new FixPriceProduct("");
