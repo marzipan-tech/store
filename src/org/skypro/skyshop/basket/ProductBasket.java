@@ -5,7 +5,7 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private LinkedList<Product> products;
+    private List<Product> products;
 
     public ProductBasket() {
         this.products = new LinkedList<>();
