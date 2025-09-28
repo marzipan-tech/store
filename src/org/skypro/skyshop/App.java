@@ -9,7 +9,9 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFound {
@@ -61,12 +63,9 @@ public class App {
         engine.add(breadBorodinskiyKolomenskoe);
         engine.add(milkProstokvashino32);
         engine.add(breadRzhanoyKolomenskoe);
-        System.out.println(Arrays.toString(engine.search("мясо")));
-        System.out.println(Arrays.toString(engine.search("Вкуснотеево")));
-        engine.add(milk);
-        engine.add(milk);
-        engine.add(milk);
-        System.out.println(Arrays.toString(engine.search("молоко")));
+        System.out.println(engine.search("мясо"));
+        System.out.println(engine.search("вкуснотеево"));
+        System.out.println(engine.search("хлеб"));
         try {
             Product fish = new DiscountedProduct(" ", 10, 1200);
             Product salt = new FixPriceProduct("");
@@ -102,5 +101,18 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
+        basket.addProduct(milk);
+        basket.addProduct(cheese);
+        basket.addProduct(bread);
+        basket.addProduct(flour);
+        System.out.println(basket.deleteProductByName("сыр"));
+        basket.printBasket();
+        List<Product> deletedItems = basket.deleteProductByName("яблоки");
+        if (deletedItems.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println(deletedItems);
+        }
+        basket.printBasket();
     }
 }
