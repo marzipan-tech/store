@@ -5,21 +5,23 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private List<Product> products;
+    private Map<String, List<Product>> products;
 
     public ProductBasket() {
-        this.products = new LinkedList<>();
+        this.products = new HashMap<>();
     }
 
     public void addProduct(Product product) {
-        products.add(product);
+        products.computeIfAbsent(product.getName(), k -> new LinkedList<>()).add(product);
     }
 
     public int findTotalSum() {
         int totalSum = 0;
-        for (Product product : products) {
-            if (product != null) {
-                totalSum += product.getPrice();
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    totalSum += product.getPrice();
+                }
             }
         }
         return totalSum;
@@ -27,9 +29,11 @@ public class ProductBasket {
 
     private int countSpecialProducts() {
         int count = 0;
-        for (Product product : products) {
-            if (product != null && product.isSpecial()) {
-                count++;
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                if (product != null && product.isSpecial()) {
+                    count++;
+                }
             }
         }
         return count;
@@ -39,9 +43,11 @@ public class ProductBasket {
         if (products.isEmpty()) {
             System.out.println("В корзине пусто");
         }
-        for (Product product : products) {
-            if (product != null) {
-                System.out.println(product);
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    System.out.println(product);
+                }
             }
         }
         System.out.println("Итого: " + findTotalSum() + " руб.");
@@ -49,9 +55,11 @@ public class ProductBasket {
     }
 
     public boolean checkIsProductInBasket(String name) {
-        for (Product product : products) {
-            if (product != null && Objects.equals(product.getName(), name)) {
-                return true;
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                if (product != null && Objects.equals(product.getName(), name)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -62,13 +70,15 @@ public class ProductBasket {
     }
 
     public List<Product> deleteProductByName(String name) {
-        Iterator<Product> iterator = products.iterator();
         List<Product> deletedItems = new ArrayList<>();
-        while (iterator.hasNext()) {
-            Product item = iterator.next();
-            if (item.searchTerm().equalsIgnoreCase(name)) {
-                deletedItems.add(item);
-                iterator.remove();
+        for (List<Product> productList : products.values()) {
+            Iterator<Product> iterator = productList.iterator();
+            while (iterator.hasNext()) {
+                Product item = iterator.next();
+                if (item.searchTerm().equalsIgnoreCase(name)) {
+                    deletedItems.add(item);
+                    iterator.remove();
+                }
             }
         }
         return deletedItems;
