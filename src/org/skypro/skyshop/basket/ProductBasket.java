@@ -12,7 +12,7 @@ public class ProductBasket {
     }
 
     public void addProduct(Product product) {
-        products.computeIfAbsent(product.getName(), k -> new LinkedList<>()).add(product);
+        products.computeIfAbsent(product.getName().toLowerCase(), k -> new LinkedList<>()).add(product);
     }
 
     public int findTotalSum() {
@@ -70,17 +70,6 @@ public class ProductBasket {
     }
 
     public List<Product> deleteProductByName(String name) {
-        List<Product> deletedItems = new ArrayList<>();
-        for (List<Product> productList : products.values()) {
-            Iterator<Product> iterator = productList.iterator();
-            while (iterator.hasNext()) {
-                Product item = iterator.next();
-                if (item.searchTerm().equalsIgnoreCase(name)) {
-                    deletedItems.add(item);
-                    iterator.remove();
-                }
-            }
-        }
-        return deletedItems;
+        return products.remove(name.toLowerCase());
     }
 }
