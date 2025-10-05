@@ -108,7 +108,7 @@ public class App {
         System.out.println(basket.deleteProductByName("сыр"));
         basket.printBasket();
         List<Product> deletedItems = basket.deleteProductByName("яблоки");
-        if (deletedItems.isEmpty()) {
+        if (deletedItems == null) {
             System.out.println("Список пуст");
         } else {
             System.out.println(deletedItems);
