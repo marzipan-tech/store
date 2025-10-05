@@ -5,10 +5,10 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class SearchEngine {
-    private LinkedList<Searchable> searchables;
+    private Set<Searchable> searchables;
 
-    public SearchEngine(int size) {
-        this.searchables = new LinkedList<>();
+    public SearchEngine() {
+        this.searchables = new HashSet<>();
     }
 
     @Override
@@ -16,13 +16,13 @@ public class SearchEngine {
         return "SearchEngine " + searchables;
     }
 
-    public Map<String, Searchable> search(String query) {
+    public Set<Searchable> search(String query) {
         Iterator<Searchable> iterator = searchables.iterator();
-        Map<String, Searchable> searchResult = new TreeMap<>();
+        Set<Searchable> searchResult = new TreeSet<>(new SearchableComparator());
         while (iterator.hasNext()) {
             Searchable item = iterator.next();
             if (item.searchTerm().toLowerCase().contains(query.toLowerCase())) {
-                searchResult.put(item.getName(), item);
+                searchResult.add(item);
             }
         }
         return searchResult;

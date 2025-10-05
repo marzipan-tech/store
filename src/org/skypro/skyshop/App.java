@@ -22,9 +22,11 @@ public class App {
         Product biscuit = new SimpleProduct("Печенье", 230);
         Product rice = new SimpleProduct("Рис", 150);
         Product flour = new DiscountedProduct("Мука", 5, 105);
+        Product flour2 = new DiscountedProduct("Мука новая", 5, 105);
         Product cream = new FixPriceProduct("Сливки");
         Product potato = new DiscountedProduct("Картофель", 100, 90);
         Product tomato = new DiscountedProduct("Помидоры", 0, 150);
+        Article flourMakfa = new Article("Новая мука", "«Макфа». Высший сорт");
 
         ProductBasket basket = new ProductBasket();
         basket.addProduct(bread);
@@ -44,15 +46,17 @@ public class App {
         basket.printBasket();
         System.out.println(basket.findTotalSum());
         System.out.println(basket.checkIsProductInBasket("Рис"));
-        SearchEngine engine = new SearchEngine(15);
+        SearchEngine engine = new SearchEngine();
         engine.add(bread);
         engine.add(flour);
+        engine.add(flour2);
         engine.add(milk);
         engine.add(butter);
         engine.add(cream);
         engine.add(cheese);
         engine.add(rice);
         engine.add(biscuit);
+        engine.add(flourMakfa);
         Article breadBorodinskiyKolomenskoe = new Article("Бородинский хлеб", "БКХ «Коломенское». В нарезке.");
         Article breadRzhanoyKolomenskoe = new Article("Ржаной хлеб", "БКХ «Коломенское». В нарезке.");
         Article milkProstokvashino32 = new Article("Молоко, 3,2%", "«Простоквашино». Пастеризованное");
@@ -63,9 +67,10 @@ public class App {
         engine.add(breadBorodinskiyKolomenskoe);
         engine.add(milkProstokvashino32);
         engine.add(breadRzhanoyKolomenskoe);
-        System.out.println(engine.search("мясо").values());
-        System.out.println(engine.search("вкуснотеево").values());
-        System.out.println(engine.search("хлеб").values());
+        System.out.println(engine.search("мясо"));
+        System.out.println(engine.search("вкуснотеево"));
+        System.out.println(engine.search("хлеб"));
+        System.out.println(engine.search("мука"));
         try {
             Product fish = new DiscountedProduct(" ", 10, 1200);
             Product salt = new FixPriceProduct("");
