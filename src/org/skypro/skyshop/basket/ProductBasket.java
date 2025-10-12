@@ -16,53 +16,38 @@ public class ProductBasket {
     }
 
     public int findTotalSum() {
-        int totalSum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    totalSum += product.getPrice();
-                }
-            }
-        }
-        return totalSum;
+        return products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     private int countSpecialProducts() {
-        int count = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null && product.isSpecial()) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return Math.toIntExact(products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count());
     }
 
     public void printBasket() {
         if (products.isEmpty()) {
             System.out.println("В корзине пусто");
         }
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                }
-            }
-        }
+        products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .forEach(System.out::println);
         System.out.println("Итого: " + findTotalSum() + " руб.");
         System.out.println("Специальных товаров: " + countSpecialProducts());
     }
 
     public boolean checkIsProductInBasket(String name) {
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null && Objects.equals(product.getName(), name)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .anyMatch(i -> Objects.equals(i.getName(), name));
     }
 
     public void emptyBasket() {
